@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { Canvas } from "@react-three/fiber";
 import { Environment, Center, CameraControls } from "@react-three/drei";
 // import { motion } from "framer-motion-3d"; // Import dari framer-motion-3d
@@ -21,7 +22,7 @@ const CanvasModel = () => {
       const isMobile = window.innerWidth <= 600;
 
       // Tentukan posisi kamera berdasarkan ukuran layar
-      let targetPosition = [-0.4, 0, 2];
+      let targetPosition = [5, 0, 2];
       if (snap.intro) {
         if (isBreakpoint) targetPosition = [0, 0, 2];
         if (isMobile) targetPosition = [0, 0.2, 2.5];
@@ -50,7 +51,7 @@ const CanvasModel = () => {
   return (
     <Canvas
       shadows
-      camera={{ position: [0, 0, 2], fov: 25 }}
+      camera={{ position: [5, 0, 2], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
       className="w-full max-w-full h-full transition-all ease-in"
     >

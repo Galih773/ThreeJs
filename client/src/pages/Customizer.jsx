@@ -7,6 +7,7 @@ import { downloadCanvasToImage, reader } from "../config/helpers";
 import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
 import { fadeAnimation, slideAnimation } from "../config/motion";
 import { ColorPicker, CustomButton, FilePicker, Tab } from "../components";
+import LogoPositioner from "../components/LogoPositioner";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -43,6 +44,8 @@ const Customizer = () => {
         return <ColorPicker />;
       case "filepicker":
         return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
+      case "logoPositioner":
+        return <LogoPositioner />;
       default:
         return null;
     }

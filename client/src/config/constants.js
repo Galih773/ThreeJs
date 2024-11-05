@@ -9,6 +9,10 @@ export const EditorTabs = [
     name: "filepicker",
     icon: fileIcon,
   },
+  {
+    name: "logoPositioner",
+    icon: logoShirt, // Gantilah dengan ikon yang cocok
+  },
 ];
 
 export const FilterTabs = [
