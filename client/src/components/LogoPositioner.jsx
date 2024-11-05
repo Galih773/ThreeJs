@@ -19,7 +19,7 @@ const LogoPositioner = () => {
     // Normalisasi posisi untuk diterapkan ke model 3D
     let normalizedX = (e.target.x() - stageWidth / 2) * scaleFactor; // Geser titik tengah dan kalikan dengan faktor skala
     let normalizedY = -(e.target.y() - stageHeight / 2) * scaleFactor; // Invers y agar sesuai dengan koordinat Three.js
-    const normalizedZ = -0.09; // Tetapkan Z sebagai nilai tetap agar tetap menempel di permukaan kaos
+    const normalizedZ = 0.09; // Tetapkan Z sebagai nilai tetap agar tetap menempel di permukaan kaos
 
     // Batasan maksimum dan minimum untuk X dan Y
     const maxCoordinate = 0.25;
