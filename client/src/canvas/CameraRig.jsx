@@ -68,18 +68,16 @@ const CameraRig = ({ children }) => {
 
     // set camera position smoothly
     easing.damp3(state.camera.position, targetPosition, 0.25, delta);
+    console.log(targetPosition);
+    // state.camera.position.set(
+    //   targetPosition[0],
+    //   targetPosition[1],
+    //   targetPosition[2]
+    // );
+    // state.camera.position.set(-0.4, 0, 2);
   });
 
-  return (
-    <group
-      ref={group}
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerMove={handlePointerMove}
-    >
-      {children}
-    </group>
-  );
+  return <group ref={group}>{children}</group>;
 };
 
 export default CameraRig;
