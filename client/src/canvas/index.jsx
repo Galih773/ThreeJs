@@ -54,7 +54,7 @@ const CanvasModel = () => {
       gl={{ preserveDrawingBuffer: true }}
       className="w-full max-w-full h-full transition-all ease-in"
     >
-      {/* <ambientLight intensity={0.5 * Math.PI} /> */}
+      <ambientLight intensity={0.5 * Math.PI} />
       <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/potsdamer_platz_1k.hdr" />
 
       {/* <CameraRig> */}
