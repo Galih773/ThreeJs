@@ -5,9 +5,10 @@ const state = proxy({
   color: "#EFBD48",
   isLogoTexture: true,
   isFullTexture: false,
-  logoDecal: "./square.png",
+  logoDecal: "./threejs.png",
   fullDecal: "./threejs.png",
-  logoPosition: { x: 0, y: 0, z: -0.09 },
+  decalPosition: [0, 0.04, 0.15],
+  isDecalSelected: false,
 });
 
 export default state;

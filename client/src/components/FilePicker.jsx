@@ -1,40 +1,63 @@
 /* eslint-disable react/prop-types */
 import CustomButton from "./CustomButton";
+import { useSnapshot } from "valtio";
+import state from "../store";
+import { getContrastingColor } from "../config/helpers";
+import { MdDelete } from "react-icons/md";
 
 const FilePicker = ({ file, setFile, readFile }) => {
+  const snap = useSnapshot(state);
+
+  const generateStyle = (type) => {
+    return {
+      backgroundColor: snap.color,
+      color: getContrastingColor(snap.color),
+    };
+  };
+
+  const handleOnchange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    readFile("logo", selectedFile);
+    state.isLogoTexture = true;
+  };
+
+  const handleResetFile = () => {
+    setFile("");
+    state.isLogoTexture = false;
+    state.isFullTexture = false;
+  };
+
   return (
-    <div className="filepicker-container">
-      <div className="flex-1 flex flex-col">
+    <>
+      <div
+        style={generateStyle()}
+        className="rounded-md p-2 text-xs my-4 text-truncate flex items-center justify-between"
+      >
+        {file === "" ? "No file selected" : file.name}
+        {file !== "" && (
+          <MdDelete
+            onClick={() => handleResetFile()}
+            className="h-4 w-4 cursor-pointer"
+          />
+        )}
+      </div>
+      <div className="flex-1 flex justify-center items-center flex-col min-h-full">
         <input
           id="file-upload"
           type="file"
           accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={(e) => handleOnchange(e)}
         />
-        <label htmlFor="file-upload" className="filepicker-label">
+        <label
+          htmlFor="file-upload"
+          className="filepicker-label"
+          style={generateStyle()}
+        >
           Upload File
         </label>
-
-        <p className="mt-2 text-gray-500 text-xs truncate">
-          {file === "" ? "No file selected" : file.name}
-        </p>
       </div>
-
-      <div className="mt-4 flex flex-wrap gap-3">
-        <CustomButton
-          type="outline"
-          title="Logo"
-          handleClick={() => readFile("logo")}
-          customStyles="text-xs"
-        />
-        <CustomButton
-          type="filled"
-          title="Full"
-          handleClick={() => readFile("full")}
-          customStyles="text-xs"
-        />
-      </div>
-    </div>
+    </>
   );
 };
 
