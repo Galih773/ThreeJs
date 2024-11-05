@@ -6,8 +6,15 @@ import { download } from "../assets";
 import { downloadCanvasToImage, reader } from "../config/helpers";
 import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
 import { fadeAnimation, slideAnimation } from "../config/motion";
-import { ColorPicker, CustomButton, FilePicker, Tab } from "../components";
-import LogoPositioner from "../components/LogoPositioner";
+import { IoDownload } from "react-icons/io5";
+
+import {
+  ColorPicker,
+  CustomButton,
+  FilePicker,
+  Tab,
+  CustomizerBox,
+} from "../components";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -44,8 +51,6 @@ const Customizer = () => {
         return <ColorPicker />;
       case "filepicker":
         return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
-      case "logoPositioner":
-        return <LogoPositioner />;
       default:
         return null;
     }
@@ -96,27 +101,6 @@ const Customizer = () => {
     <AnimatePresence>
       {!snap.intro && (
         <>
-          {/* left menu tabs */}
-          <motion.div
-            key="custom"
-            className="absolute top-0 left-0 z-10"
-            {...slideAnimation("left")}
-          >
-            <div className="flex items-center min-h-screen" ref={editorTabRef}>
-              <div className="editortabs-container tabs">
-                {EditorTabs.map((tab) => (
-                  <Tab
-                    key={tab.name}
-                    tab={tab}
-                    handleClick={() => handleTabClick(tab.name)}
-                  />
-                ))}
-
-                {generateTabContent()}
-              </div>
-            </div>
-          </motion.div>
-
           {/* Go back button */}
           <motion.div
             className="absolute z-10 top-5 right-5"
@@ -128,6 +112,13 @@ const Customizer = () => {
               handleClick={() => (state.intro = true)}
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
             />
+          </motion.div>
+
+          <motion.div
+            className="absolute z-10 right-5 top-1/2 transform -translate-y-1/2"
+            {...fadeAnimation}
+          >
+            <CustomizerBox />
           </motion.div>
 
           {/* filter tabs */}
@@ -146,11 +137,7 @@ const Customizer = () => {
             ))}
 
             <button className="download-btn" onClick={downloadCanvasToImage}>
-              <img
-                src={download}
-                alt="Download Image"
-                className="w-3/5 h-3/5 object-contain"
-              />
+              <IoDownload className="w-3/5 h-3/5 object-contain text-green-500" />
             </button>
           </motion.div>
         </>

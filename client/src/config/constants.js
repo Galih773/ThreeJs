@@ -1,4 +1,7 @@
 import { swatch, fileIcon, logoShirt, stylishShirt } from "../assets";
+import { RiTShirtAirFill } from "react-icons/ri";
+import { IoShirt } from "react-icons/io5";
+import { color } from "framer-motion";
 
 export const EditorTabs = [
   {
@@ -9,20 +12,18 @@ export const EditorTabs = [
     name: "filepicker",
     icon: fileIcon,
   },
-  {
-    name: "logoPositioner",
-    icon: logoShirt, // Gantilah dengan ikon yang cocok
-  },
 ];
 
 export const FilterTabs = [
   {
     name: "logoShirt",
-    icon: logoShirt,
+    icon: IoShirt,
+    color: "text-blue-500",
   },
   {
     name: "stylishShirt",
-    icon: stylishShirt,
+    icon: RiTShirtAirFill,
+    color: "text-orange-500",
   },
 ];
 
