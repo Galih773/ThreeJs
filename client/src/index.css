@@ -35,12 +35,24 @@ html {
   @apply w-14 h-14 flex justify-center items-center rounded-full glassmorphism cursor-pointer outline-none;
 }
 
+.download-btn-active {
+  @apply w-14 h-14 flex justify-center items-center rounded-full cursor-pointer outline-none bg-opacity-75;
+}
+
 .editortabs-container {
   @apply glassmorphism w-16 border-[2px] rounded-lg flex flex-col justify-center items-center ml-1 py-4 gap-4;
 }
 
 .filtertabs-container {
   @apply absolute z-10 bottom-32 right-80 flex justify-center items-center flex-wrap gap-4;
+}
+
+.modalproduct-container {
+  @apply absolute z-10 top-16 left-[31%] flex justify-center items-center flex-wrap gap-4;
+}
+
+.product-container {
+  @apply absolute z-10 top-16 left-[35%] flex justify-center items-center flex-wrap gap-4;
 }
 
 .aipicker-container {

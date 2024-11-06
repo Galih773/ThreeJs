@@ -19,6 +19,8 @@ const state = proxy({
   textFontStyle: "", // Tambahkan gaya font (bold, italic)
   textFill: "#000000", // Tambahkan warna teks
   textTexture: null, // Menyimpan tekstur teks yang dihasilkan
+  showControl: false,
+  modelActive: "shirt",
 });
 
 export default state;

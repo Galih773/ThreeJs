@@ -7,7 +7,7 @@ import { getContrastingColor } from "../config/helpers";
 
 const CustomButton = ({
   type,
-  title,
+  title = "",
   customStyles,
   handleClick,
   icon = null,

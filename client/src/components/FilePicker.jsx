@@ -5,9 +5,13 @@ import state from "../store";
 import { getContrastingColor } from "../config/helpers";
 import { MdDelete } from "react-icons/md";
 import TextEditor from "./TextEditor";
+import { IoIosSettings } from "react-icons/io";
+import { useState } from "react";
 
 const FilePicker = ({ file, setFile, readFile }) => {
   const snap = useSnapshot(state);
+
+  const [activeControl, setActiveControl] = useState(state.showControl);
 
   const generateStyle = (type) => {
     return {
@@ -29,6 +33,11 @@ const FilePicker = ({ file, setFile, readFile }) => {
     state.isFullTexture = false;
   };
 
+  const handleShowControl = () => {
+    state.showControl = !state.showControl;
+    setActiveControl(state.showControl);
+  };
+
   return (
     <>
       <div
@@ -37,10 +46,12 @@ const FilePicker = ({ file, setFile, readFile }) => {
       >
         {file === "" ? "No file selected" : file.name}
         {file !== "" && (
-          <MdDelete
-            onClick={() => handleResetFile()}
-            className="h-4 w-4 cursor-pointer"
-          />
+          <>
+            <MdDelete
+              onClick={() => handleResetFile()}
+              className="h-4 w-4 cursor-pointer"
+            />
+          </>
         )}
       </div>
       <div className="flex-1 flex justify-center items-center flex-col min-h-full">
@@ -57,6 +68,14 @@ const FilePicker = ({ file, setFile, readFile }) => {
         >
           Upload File
         </label>
+      </div>
+      <div>
+        <CustomButton
+          icon={<IoIosSettings />}
+          type={activeControl ? "filled" : "outline"}
+          customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+          handleClick={() => handleShowControl()}
+        />
       </div>
     </>
   );
