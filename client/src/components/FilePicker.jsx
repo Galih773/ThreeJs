@@ -4,7 +4,7 @@ import { useSnapshot } from "valtio";
 import state from "../store";
 import { getContrastingColor } from "../config/helpers";
 import { MdDelete } from "react-icons/md";
-import LogoPositioner from "./LogoPositioner";
+import TextEditor from "./TextEditor";
 
 const FilePicker = ({ file, setFile, readFile }) => {
   const snap = useSnapshot(state);
@@ -44,7 +44,6 @@ const FilePicker = ({ file, setFile, readFile }) => {
         )}
       </div>
       <div className="flex-1 flex justify-center items-center flex-col min-h-full">
-        <LogoPositioner />
         <input
           id="file-upload"
           type="file"
