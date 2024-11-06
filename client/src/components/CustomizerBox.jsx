@@ -68,7 +68,7 @@ const CustomizerBox = () => {
         />
       </div>
       <div className="flex flex-1 flex-col">{generateTabContent()}</div>
-      {/* <TextEditor /> */}
+      <TextEditor />
     </div>
   );
 };

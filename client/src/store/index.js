@@ -3,7 +3,7 @@ import { proxy } from "valtio";
 const state = proxy({
   intro: true,
   color: "#EFBD48",
-  isLogoTexture: true,
+  isLogoTexture: false,
   isFullTexture: false,
   logoDecal: "./square.png",
   // fullDecal: "./threejs.png",
@@ -13,12 +13,12 @@ const state = proxy({
   //   height: 0.15,
   // },
   // logoRotation: 0,
-  textContent: "Teks Anda di sini", // Tambahkan konten teks
-  textFontFamily: "Arial", // Tambahkan font family
-  textFontSize: 40, // Tambahkan ukuran font
-  textFontStyle: "", // Tambahkan gaya font (bold, italic)
-  textFill: "#000000", // Tambahkan warna teks
-  textTexture: null, // Menyimpan tekstur teks yang dihasilkan
+  textContent: "Your Text Here",
+  textFontFamily: "Arial",
+  textFontSize: 100,
+  textFontStyle: "",
+  textFill: "#000000",
+  textDataUrl: null,
 });
 
 export default state;

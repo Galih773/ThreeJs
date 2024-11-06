@@ -3,54 +3,81 @@ import { useRef, useEffect } from "react";
 import { Stage, Layer, Text } from "react-konva";
 import { useSnapshot } from "valtio";
 import state from "../store";
-import * as THREE from "three";
 import { useDebouncedCallback } from "use-debounce";
 
 const TextEditor = () => {
   const stageRef = useRef(null);
   const snap = useSnapshot(state);
 
-  const debouncedUpdateTexture = useDebouncedCallback((uri) => {
-    const loader = new THREE.TextureLoader();
-    loader.setCrossOrigin("anonymous");
-    loader.load(uri, (texture) => {
-      texture.needsUpdate = true;
-      state.textTexture = texture;
-    });
+  // Debounced function to update data URL
+  const debouncedUpdateDataUrl = useDebouncedCallback(() => {
+    if (stageRef.current) {
+      const uri = stageRef.current.toDataURL({ pixelRatio: 2 });
+      state.textDataUrl = uri;
+    }
   }, 300);
 
-  // // Perbarui tekstur teks setiap kali properti teks berubah
-  // useEffect(() => {
-  //   const uri = stageRef.current.toDataURL({ pixelRatio: 2 });
-  //   debouncedUpdateTexture(uri);
-  // }, [snap.textContent, snap.textFontSize, snap.textFontFamily, snap.textFontStyle, snap.textFill, debouncedUpdateTexture.callback, debouncedUpdateTexture]);
+  // Update data URL whenever text properties change
+  useEffect(() => {
+    console.log(snap);
+    debouncedUpdateDataUrl();
+  }, [
+    snap.textContent,
+    snap.textFontSize,
+    snap.textFontFamily,
+    snap.textFontStyle,
+    snap.textFill,
+  ]);
 
-  // // Handle perubahan properti teks
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   state[name] = value;
-  // };
+  // Handle text property changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    state[name] = value;
+  };
 
-  // // Toggle gaya teks (bold, italic)
-  // const toggleStyle = (style) => {
-  //   if (state.textFontStyle.includes(style)) {
-  //     state.textFontStyle = state.textFontStyle.replace(style, "").trim();
-  //   } else {
-  //     state.textFontStyle = `${state.textFontStyle} ${style}`.trim();
-  //   }
-  // };
+  // Toggle text styles (bold, italic)
+  const toggleStyle = (style) => {
+    if (snap.textFontStyle.includes(style)) {
+      state.textFontStyle = snap.textFontStyle.replace(style, "").trim();
+    } else {
+      state.textFontStyle = `${snap.textFontStyle} ${style}`.trim();
+    }
+  };
+
+  // Ukuran canvas tetap
+  const canvasWidth = 500;
+  const canvasHeight = 500;
+
+  // Hitung faktor skala
+  const maxTextWidth = canvasWidth * 0.9; // Berikan sedikit padding
+
+  // Buat objek Text sementara untuk mengukur
+  const tempText = new window.Konva.Text({
+    text: snap.textContent,
+    fontSize: snap.textFontSize,
+    fontFamily: snap.textFontFamily,
+    fontStyle: snap.textFontStyle,
+  });
+  const textWidth = tempText.width();
+  const textHeight = tempText.height();
+
+  // Sesuaikan skala jika teks melebihi canvas
+  const scale = Math.min(
+    maxTextWidth / textWidth || 1,
+    canvasHeight / textHeight || 1,
+    1
+  );
 
   return (
     <div>
-      hja
-      {/* Kontrol untuk properti teks */}
-      {/* <div>
+      {/* Controls for text properties */}
+      <div>
         <input
           type="text"
           name="textContent"
           value={snap.textContent}
           onChange={handleChange}
-          placeholder="Masukkan teks"
+          placeholder="Enter text"
         />
         <input
           type="color"
@@ -66,18 +93,18 @@ const TextEditor = () => {
           <option value="Arial">Arial</option>
           <option value="Helvetica">Helvetica</option>
           <option value="Times New Roman">Times New Roman</option>
-          
+          {/* Add more font options if needed */}
         </select>
         <button onClick={() => toggleStyle("bold")}>
-          {snap.textFontStyle.includes("bold") ? "Normal" : "Tebal"}
+          {snap.textFontStyle.includes("bold") ? "Normal" : "Bold"}
         </button>
         <button onClick={() => toggleStyle("italic")}>
-          {snap.textFontStyle.includes("italic") ? "Normal" : "Miring"}
+          {snap.textFontStyle.includes("italic") ? "Normal" : "Italic"}
         </button>
-        
-      </div> */}
+        {/* Add other controls if needed */}
+      </div>
       {/* Konva Stage */}
-      {/* <Stage width={500} height={500} ref={stageRef}>
+      <Stage width={500} height={500} ref={stageRef}>
         <Layer>
           <Text
             text={snap.textContent}
@@ -85,20 +112,17 @@ const TextEditor = () => {
             fontFamily={snap.textFontFamily}
             fontStyle={snap.textFontStyle}
             fill={snap.textFill}
-            x={250}
-            y={250}
-            offsetX={250}
-            offsetY={250}
-            draggable
-            onDragEnd={(e) => {
-              // Perbarui posisi jika diperlukan
-              state.textX = e.target.x();
-              state.textY = e.target.y();
-            }}
-            // Handle transform jika diperlukan
+            // x={canvasWidth / 2}
+            // y={canvasHeight / 2}
+            // offsetX={canvasWidth / 2}
+            // offsetY={canvasHeight / 2}
+            align="center"
+            verticalAlign="middle"
+            scaleX={scale}
+            scaleY={scale}
           />
         </Layer>
-      </Stage> */}
+      </Stage>
     </div>
   );
 };
