@@ -24,6 +24,8 @@ const Shirt = () => {
 
   const meshRef = useRef(); // Create a ref for the mesh
 
+  const logoTexture = useTexture(snap.logoDecal);
+
   useEffect(() => {
     if (snap.textDataUrl) {
       const loader = new THREE.TextureLoader();
@@ -78,14 +80,16 @@ const Shirt = () => {
           )}
         </group>
 
-        <Decal
-          position={pos}
-          rotation={rot}
-          scale={scl}
-          map={useTexture(snap.logoDecal)}
-          mesh={meshRef.current} // Pass the mesh reference
-          material-depthTest={true}
-        />
+        {snap.isLogoTexture && (
+          <Decal
+            position={pos}
+            rotation={rot}
+            scale={scl}
+            map={logoTexture}
+            mesh={meshRef.current} // Pass the mesh reference
+            material-depthTest={true}
+          />
+        )}
 
         {textTexture && (
           <>
@@ -114,17 +118,19 @@ const Shirt = () => {
               )}
             </group>
 
-            <Decal
-              position={textPos}
-              rotation={textRot}
-              scale={textScl}
-              map={textTexture}
-              mesh={meshRef.current} // Pass the mesh reference
-              depthTest={false}
-              transparent={true}
-              opacity={1}
-              material-depthWrite={false}
-            />
+            {snap.isText && (
+              <Decal
+                position={textPos}
+                rotation={textRot}
+                scale={textScl}
+                map={textTexture}
+                mesh={meshRef.current} // Pass the mesh reference
+                depthTest={false}
+                transparent={true}
+                opacity={1}
+                material-depthWrite={false}
+              />
+            )}
           </>
         )}
       </mesh>
