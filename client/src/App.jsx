@@ -33,7 +33,7 @@ function App() {
         }}
         className="w-full h-full"
       >
-        <Canvas />
+        {snap.modelActive === "shirt" ? <Canvas /> : <>Coming Soon</>}
       </motion.div>
 
       <Customizer />

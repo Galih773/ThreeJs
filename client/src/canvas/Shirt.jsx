@@ -60,35 +60,33 @@ const Shirt = () => {
         material-aoMapIntensity={1}
         dispose={null}
       >
-        {snap.isLogoTexture && (
-          <>
-            <group position={[0, 0, 0.15]}>
-              <PivotControls
-                scale={0.1}
-                activeAxes={[true, true, true]}
-                onDrag={(local) => {
-                  const position = new THREE.Vector3();
-                  const scale = new THREE.Vector3();
-                  const quaternion = new THREE.Quaternion();
-                  local.decompose(position, quaternion, scale);
-                  const rotation = new THREE.Euler().setFromQuaternion(
-                    quaternion
-                  );
-                  setXYZ([position.x, position.y, position.z + 0.1]);
-                  setRot([rotation.x, rotation.y, rotation.z]);
-                  setScl([0.15 * scale.x, 0.15 * scale.y, 0.15 * scale.z]);
-                }}
-              />
-            </group>
-            <Decal
-              position={pos}
-              rotation={rot}
-              scale={scl}
-              map={logoTexture}
-              material-depthTest={true}
+        <group position={[0, 0, 0.15]}>
+          {snap.showControl && (
+            <PivotControls
+              scale={0.1}
+              activeAxes={[true, true, true]}
+              onDrag={(local) => {
+                const position = new THREE.Vector3();
+                const scale = new THREE.Vector3();
+                const quaternion = new THREE.Quaternion();
+                local.decompose(position, quaternion, scale);
+                const rotation = new THREE.Euler().setFromQuaternion(
+                  quaternion
+                );
+                setXYZ([position.x, position.y, position.z + 0.1]);
+                setRot([rotation.x, rotation.y, rotation.z]);
+                setScl([0.15 * scale.x, 0.15 * scale.y, 0.15 * scale.z]);
+              }}
             />
-          </>
-        )}
+          )}
+        </group>
+        <Decal
+          position={pos}
+          rotation={rot}
+          scale={scl}
+          map={useTexture(snap.logoDecal)}
+          material-depthTest={true}
+        />
 
         {textTexture && (
           <>

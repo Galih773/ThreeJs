@@ -7,6 +7,10 @@ import { downloadCanvasToImage, reader } from "../config/helpers";
 import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
 import { fadeAnimation, slideAnimation } from "../config/motion";
 import { IoDownload } from "react-icons/io5";
+import { HiMiniSquare3Stack3D } from "react-icons/hi2";
+import { IoShirt } from "react-icons/io5";
+import { FaHatCowboy } from "react-icons/fa";
+import { IoBag } from "react-icons/io5";
 
 import {
   ColorPicker,
@@ -20,6 +24,7 @@ const Customizer = () => {
   const snap = useSnapshot(state);
   const [file, setFile] = useState("");
   const [activeEditorTab, setActiveEditorTab] = useState("");
+  const [activeProductModal, setActiveProductModal] = useState(false);
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
     stylishShirt: false,
@@ -97,6 +102,11 @@ const Customizer = () => {
     });
   };
 
+  const handleIntro = () => {
+    state.intro = true;
+    state.showControl = false;
+  };
+
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -109,7 +119,7 @@ const Customizer = () => {
             <CustomButton
               type="filled"
               title="Go Back"
-              handleClick={() => (state.intro = true)}
+              handleClick={() => handleIntro()}
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
             />
           </motion.div>
@@ -136,10 +146,64 @@ const Customizer = () => {
               />
             ))}
 
-            <button className="download-btn" onClick={downloadCanvasToImage}>
+            <button
+              className="download-btn"
+              onClick={() => {
+                state.showControl = false;
+                setTimeout(() => downloadCanvasToImage(), 100);
+              }}
+            >
               <IoDownload className="w-3/5 h-3/5 object-contain text-green-500" />
             </button>
           </motion.div>
+
+          {/* modal 3d models */}
+          <motion.div
+            className="modalproduct-container"
+            {...slideAnimation("down")}
+          >
+            <button
+              className={
+                !activeProductModal ? "download-btn" : "download-btn-active"
+              }
+              onClick={() => {
+                setActiveProductModal(!activeProductModal);
+              }}
+            >
+              <HiMiniSquare3Stack3D className="w-3/5 h-3/5 object-contain text-green-500" />
+            </button>
+          </motion.div>
+          {activeProductModal && (
+            <motion.div
+              className="product-container"
+              {...slideAnimation("left")}
+            >
+              <button
+                className="download-btn"
+                onClick={() => {
+                  state.modelActive = "shirt";
+                }}
+              >
+                <IoShirt className="w-3/5 h-3/5 object-contain text-white" />
+              </button>
+              <button
+                className="download-btn"
+                onClick={() => {
+                  state.modelActive = "coming-soon";
+                }}
+              >
+                <FaHatCowboy className="w-3/5 h-3/5 object-contain text-white" />
+              </button>
+              <button
+                className="download-btn"
+                onClick={() => {
+                  state.modelActive = "coming-soon";
+                }}
+              >
+                <IoBag className="w-3/5 h-3/5 object-contain text-white" />
+              </button>
+            </motion.div>
+          )}
         </>
       )}
     </AnimatePresence>
