@@ -42,7 +42,7 @@ const LogoPositioner = () => {
   const imageY = stageHeight / 2 - snap.logoPosition.y / scaleFactor;
 
   return (
-    <div className="absolute left-full ml-3 glassmorphism rounded-md">
+    <div className="glassmorphism rounded-md">
       <Stage width={stageWidth} height={stageHeight}>
         <Layer>
           <Image

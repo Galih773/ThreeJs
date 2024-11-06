@@ -19,7 +19,7 @@ function App() {
           x: snap.intro ? 300 : 0, // Posisi awal, kalau `intro` true maka di kanan, kalau false di tengah
         }}
         animate={{
-          x: snap.intro ? 300 : 0, // Posisi akhir saat `intro` berubah
+          x: snap.intro ? 300 : -325, // Posisi akhir saat `intro` berubah
         }}
         transition={{
           type: "spring",

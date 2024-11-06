@@ -103,7 +103,7 @@ const Customizer = () => {
         <>
           {/* Go back button */}
           <motion.div
-            className="absolute z-10 top-5 right-5"
+            className="absolute z-10 top-5 right-48"
             {...fadeAnimation}
           >
             <CustomButton
@@ -115,7 +115,7 @@ const Customizer = () => {
           </motion.div>
 
           <motion.div
-            className="absolute z-10 right-5 top-1/2 transform -translate-y-1/2"
+            className="absolute z-10 right-48 top-1/2 transform -translate-y-1/2"
             {...fadeAnimation}
           >
             <CustomizerBox />
