@@ -4,6 +4,9 @@ import { Stage, Layer, Text } from "react-konva";
 import { useSnapshot } from "valtio";
 import state from "../store";
 import { useDebouncedCallback } from "use-debounce";
+import { FaBold } from "react-icons/fa";
+import CustomButton from "./CustomButton";
+import { FaItalic } from "react-icons/fa";
 
 const TextEditor = () => {
   const stageRef = useRef(null);
@@ -69,21 +72,15 @@ const TextEditor = () => {
   );
 
   return (
-    <div>
+    <div className="mt-4">
       {/* Controls for text properties */}
-      <div>
+      <div className="flex gap-4 flex-col flex-start">
         <input
           type="text"
           name="textContent"
           value={snap.textContent}
           onChange={handleChange}
           placeholder="Enter text"
-        />
-        <input
-          type="color"
-          name="textFill"
-          value={snap.textFill}
-          onChange={handleChange}
         />
         <select
           name="textFontFamily"
@@ -95,16 +92,45 @@ const TextEditor = () => {
           <option value="Times New Roman">Times New Roman</option>
           {/* Add more font options if needed */}
         </select>
-        <button onClick={() => toggleStyle("bold")}>
-          {snap.textFontStyle.includes("bold") ? "Normal" : "Bold"}
-        </button>
-        <button onClick={() => toggleStyle("italic")}>
-          {snap.textFontStyle.includes("italic") ? "Normal" : "Italic"}
-        </button>
+        <div className="flex gap-2 items-center mb-8">
+          <input
+            type="color"
+            name="textFill"
+            value={snap.textFill}
+            onChange={handleChange}
+          />
+          <div>
+            <CustomButton
+              icon={<FaBold />}
+              type={snap.textFontStyle.includes("bold") ? "filled" : "outline"}
+              title={snap.textFontStyle.includes("bold") ? "Normal" : "Bold"}
+              customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+              handleClick={() => toggleStyle("bold")}
+            />
+          </div>
+          <div>
+            <CustomButton
+              icon={<FaItalic />}
+              type={
+                snap.textFontStyle.includes("italic") ? "filled" : "outline"
+              }
+              title={
+                snap.textFontStyle.includes("italic") ? "Normal" : "Italic"
+              }
+              customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+              handleClick={() => toggleStyle("italic")}
+            />
+          </div>
+        </div>
         {/* Add other controls if needed */}
       </div>
       {/* Konva Stage */}
-      <Stage width={500} height={500} ref={stageRef}>
+      <Stage
+        width={450}
+        height={350}
+        ref={stageRef}
+        className="glassmorphism p-2 rounded-md"
+      >
         <Layer>
           <Text
             text={snap.textContent}

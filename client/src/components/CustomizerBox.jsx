@@ -8,7 +8,7 @@ import state from "../store";
 import { IoMdColorFill } from "react-icons/io";
 import { FaImage } from "react-icons/fa";
 import { MdOutlineTextFields } from "react-icons/md";
-import TextEditor from "./TextEditor";
+import TextPicker from "./TextPicker";
 
 const CustomizerBox = () => {
   const [activeEditorTab, setActiveEditorTab] = useState("colorpicker");
@@ -25,7 +25,7 @@ const CustomizerBox = () => {
       case "filepicker":
         return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
       case "textpicker":
-        return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
+        return <TextPicker />;
       default:
         return null;
     }
@@ -68,7 +68,6 @@ const CustomizerBox = () => {
         />
       </div>
       <div className="flex flex-1 flex-col">{generateTabContent()}</div>
-      <TextEditor />
     </div>
   );
 };
